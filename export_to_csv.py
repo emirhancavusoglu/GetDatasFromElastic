@@ -53,12 +53,13 @@ def connect_elasticsearch():
         return None
 
 def flatten_document(doc):
-    """Nested dokümanı düzleştirir."""
+    """Nested dokümanı düzleştirir. Belirtilen array field'ları olduğu gibi bırakır."""
+    # array_field includes elastic array fields. ex: signals, alarms
+    array_fields = ['signals', 'alarms']  # Dizi alanlarının listesi
     flattened = {}
     for key, value in doc.items():
-        # key is your array field ex:signals
-        if key == 'signals':
-            flattened[key] = value  
+        if key in array_fields:
+            flattened[key] = value  # Dizi alanını olduğu gibi bırak
         elif isinstance(value, dict):
             for sub_key, sub_value in value.items():
                 flattened[f"{key}.{sub_key}"] = sub_value
