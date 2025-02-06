@@ -16,11 +16,11 @@ ES_HOST = os.getenv('ES_HOST')
 ES_USERNAME = os.getenv('ES_USERNAME')
 ES_PASSWORD = os.getenv('ES_PASSWORD')
 ES_CERT_PATH = os.getenv('ES_CERT_PATH')
-ES_INDEX = # Your ES Index Name ex: 'notificationfinal*' 
+ES_INDEX = # ES Index Name ex: 'notificationfinal*' 
 ES_SCROLL_SIZE = 10000 # Scroll boyutu, ihtiyaca göre ayarlanabilir.
 
 # CSV Dosyası Adı (Temel)
-CSV_FILE_PREFIX = # ex: 'notificationfinal'
+CSV_FILE_PREFIX = # File Prefix Name ex: 'notificationfinal'
 CSV_FILE_EXTENSION = '.csv'
 
 # Hedef Dosya Boyutu (MB)
@@ -29,7 +29,7 @@ TARGET_FILE_SIZE_BYTES = TARGET_FILE_SIZE_MB * 1024 * 1024
 
 # TÜM OLASI ALAN ADLARI (ELASTICSEARCH MAPPING'DEN ALINAN)
 ALL_POSSIBLE_FIELDNAMES = [
-  #Your Columns
+  # Your Column Names
 ]
 
 def connect_elasticsearch():
@@ -56,7 +56,10 @@ def flatten_document(doc):
     """Nested dokümanı düzleştirir."""
     flattened = {}
     for key, value in doc.items():
-        if isinstance(value, dict):
+        # key is your array field ex:signals
+        if key == 'signals':
+            flattened[key] = value  
+        elif isinstance(value, dict):
             for sub_key, sub_value in value.items():
                 flattened[f"{key}.{sub_key}"] = sub_value
         else:
