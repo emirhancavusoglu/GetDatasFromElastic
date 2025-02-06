@@ -19,8 +19,8 @@ This project provides a script for extracting data from an Elasticsearch index a
 
 1. Clone the repository to your local machine:
     ```bash
-    git clone https://github.com/yourusername/elasticsearch-to-csv-exporter.git
-    cd elasticsearch-to-csv-exporter
+    git clone https://github.com/yourusername/GetDatasFromElastic.git
+    cd GetDatasFromElastic
     ```
 
 2. Install the required dependencies:
